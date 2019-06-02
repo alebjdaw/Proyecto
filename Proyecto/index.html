@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><img id="logo" src="https://media.azpm.org/master/image/2017/7/11/show-logos/remember-me-logo.png"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+          <div class="container collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active mr-4">
+                <a class="btn btn-outline-dark btn-lg" data-toggle="modal" data-target="#registroModal" >Regístrate</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#footer">Contáctenos</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      <header>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner" role="listbox">
+            <!-- Slide One - Set the background image for this slide in the line below -->
+            <div class="carousel-item active" style="background-image: url('imagenes/1.jpg')">
+              <div class="carousel-caption ">
+                <h2 class="display-4">Pon las tareas pendientes fuera de tu cabeza.</h2>
+                <p class="lead">Deja de pensar en las cosas que tienes que hacer, y deja que nosotros las recordemos por ti.</p>
+              </div>
+            </div>
+            <!-- Slide Two - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('imagenes/2.jpg')">
+              <div class="carousel-caption ">
+                <h2 class="display-4">Haz cosas juntos.</h2>
+                <p class="lead">Comparte tus listas y asigna tareas a otros para terminar las cosas antes.</p>
+              </div>
+            </div>
+            <!-- Slide Three - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('imagenes/3.jpg')">
+              <div class="carousel-caption ">
+                <h2 class="display-4">Donde quiera que vayas.</h2>
+                <p class="lead">Remember Me se abre en cualquier dispositivo.</p>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+        </div>
+      </header>
+      
+    
+      <!-- Page Content -->
+      <section id="footer">
+        <div class="bottom">
+			<div class="container">
+				<div class="row">
+                    <div class="col-md-12 text-center mt-2">
+                        <div class="copyright">
+                            <p><span>Teléfono: &nbsp</span>999 999 999 &nbsp<span>Correo: &nbsp</span> correoFalso@invento.es &nbsp<span>Dirección: &nbsp</span> C/ Falsa Nº 14</p>
+                        </div>
+                        
+                    </div>
+					<div class="col-md-12 text-center">
+						<div class="copyright">
+							<p>© <span>2018</span> <a href="#" class="transition">Remember Me</a> All rights reserved.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+      </section>
+
+      <div id="loginModal" class="modal fade">
+            <div class="modal-dialog modal-login">
+                <div class="modal-content">
+                    <form id="loginForm">
+                        <div class="modal-header">				
+                            <h4 class="modal-title">Login</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">				
+                            <div class="form-group">
+                                <label>Usuario:</label>
+                                <input type="text" class="form-control" required id="loginUsuario" minlength="5" maxlength="15" required pattern="^([a-z]+[0-9]{0,2}){5,12}$">
+                            </div>
+                            <div class="form-group">
+                                <div class="clearfix">
+                                    <label>Contraseña:</label>
+                                </div>
+                                
+                                <input type="password" class="form-control" required id="loginPassword"  minlength="5" maxlength="15" pattern="[A-Za-z0-9!?-]{5,12}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a data-dismiss="modal" data-toggle="modal" data-target="#registroModal">¿No tienes cuenta?</a>
+                            <input type="button" class="btn btn-primary pull-right" value="Login" onclick="iniciarSescion($('#loginUsuario'),$('#loginPassword'))">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div id="registroModal" class="modal fade">
+                <div class="modal-dialog modal-login">
+                    <div class="modal-content">
+                        <form id="registroForm">
+                            <div class="modal-header">				
+                                <h4 class="modal-title">Regístrate</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">				
+                                <div class="form-group">
+                                    <label>Usuario:</label>
+                                    <input type="text" class="form-control" required id="registroUsuario" minlength="5" maxlength="15" required pattern="^([a-z]+[0-9]{0,2}){5,12}$">
+                                </div>
+                                <div class="form-group">
+                                    <div class="clearfix">
+                                        <label>Contraseña:</label>
+                                    </div>
+                                    
+                                    <input type="password" class="form-control" required id="registroPassword"  minlength="5" maxlength="15" pattern="[A-Za-z0-9!?-]{5,12}">
+                                </div>
+                                <div class="form-group">
+                                        <div class="clearfix">
+                                            <label>Repite la contraseña:</label>
+                                        </div>
+                                        
+                                        <input type="password" class="form-control" required id="registroRepitePassword"  minlength="5" maxlength="15" pattern="[A-Za-z0-9!?-]{5,12}">
+                                </div>
+                                <div class="form-group">
+                                  <label>E-mail:</label>
+                                  <input type="email" class="form-control" required id="registroEmail" maxlength="30" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$">
+                                </div>
+                                <div class="form-group">
+                                        <label>Nombre:</label>
+                                        <input type="text" class="form-control" required id="registroNombre" minlength="3" maxlength="15" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,15}">
+                                </div>
+                                <div class="form-group">
+                                        <label>Apellidos:</label>
+                                        <input type="text" class="form-control" required id="registroApellidos" minlength="3" maxlength="30" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,30}" > 
+                                </div>
+                                <div class="form-group">
+                                        <label>DNI:</label>
+                                        <input type="text" class="form-control" required id="registroDni" maxlength="9" pattern="(([X-Z]{1})([-]?)(\d{7})([-]?)([A-Z]{1}))|((\d{8})([-]?)([A-Z]{1}))">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a data-dismiss="modal" data-toggle="modal" data-target="#loginModal" >¿Ya tienes cuenta?</a>
+                                <input type="button" class="btn btn-primary pull-right" value="Login" onsubmit="registrarse()">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> 
+      
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="js/controlador.js"></script>
+  </body>
+</html>

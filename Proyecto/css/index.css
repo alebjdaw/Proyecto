@@ -1,0 +1,27 @@
+
+.carousel-item {
+    height: 100vh;
+    min-height: 350px;
+    background: no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+nav{
+    background:linear-gradient(to bottom right,white,transparent);
+}
+
+#logo{
+    max-width: 250px;
+    display: block;
+    
+}
+
+#footer{
+    height: 150px;
+    padding-top: 2%;
+    background-color: #525151;
+}
+
+
