@@ -1,11 +1,12 @@
 class Usuario{
-    constructor(sDni,sPassword,bRol,sNombre,sApellidos,sUsuario){
+    constructor(sDni,sPassword,bRol,sNombre,sApellidos,sUsuario,sEmail){
         this.sDni=sDni;
         this.sPassword=sPassword;
         this.bRol=bRol;
         this.sNombre=sNombre;
         this.sApellidos=sApellidos;
-        this.aUsuario=aUsuario;
+        this.sUsuario=sUsuario;
+        this.sEmail=sEmail;
     }
 
 }

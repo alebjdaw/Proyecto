@@ -24,4 +24,10 @@ nav{
     background-color: #525151;
 }
 
-
+#footer p span{
+    
+    color: darkgrey;
+}
+#footer p{
+    color: antiquewhite;
+}
