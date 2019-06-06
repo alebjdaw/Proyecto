@@ -1,3 +1,4 @@
 <?php
-    echo json_encode($sUsuario=$_POST["sUsuario"];);
+    $datosJSON = $_POST['usuario'];
+    echo($datosJSON);
 ?>

@@ -8,7 +8,7 @@ class Usuario{
         this.sUsuario=sUsuario;
         this.sEmail=sEmail;
     }
-
+    
 }
 
 class Lista{
@@ -18,6 +18,7 @@ class Lista{
         this.sUsuarioPropietario=sUsuarioPropietario;
         this.bEliminada=bEliminada;
     }
+    
 }
 
 class Item{
@@ -31,4 +32,5 @@ class Item{
         this.sFicheroImagen=sFicheroImagen;
         this.iLista=iLista;
     }
+    
 }

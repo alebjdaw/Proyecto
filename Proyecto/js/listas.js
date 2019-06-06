@@ -1,0 +1,1 @@
+$.getScript( "./js/controlador.js");

@@ -1,8 +1,54 @@
 .masthead {
-    height: 100vh;
-    min-height: 500px;
-    background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+    
+    min-height: 1000px;
+    background-color: #f4faff;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    
   }
+  #logo{
+    max-width: 250px;
+    display: block;
+    
+}
+
+#footer{
+  height: 150px;
+  padding-top: 2%;
+  background-color: #525151;
+  
+}
+[name="lista"]{
+  background-color: #e3f2fd;
+}
+
+
+#footer p span{
+  
+  color: darkgrey;
+}
+#footer p{
+  color: antiquewhite;
+}
+
+#contenido{
+  min-height: 900px;
+  background-color: #fffcf6;
+  margin-top: 7%;
+}
+
+nav{
+  background-color: #e3f2fd;
+}
+
+h1{
+  font-family: Arial;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+li{
+  margin-top: 2px;
+}

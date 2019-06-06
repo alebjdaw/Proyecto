@@ -1,9 +1,13 @@
 <?php
 
+// Recojo los datos de entrada
+$datosJSON = $_POST["datos"];
+//Decodifico el objeto evento
+$usuario = json_decode($datosJSON);
 //Recoger parametro
-$sUsuario =$_POST["sUsuario"];
-$sPassword =$_POST["sPassword"];
-include("php/bbdd.php");
+$sUsuario=$usuario->sUsuario;
+$sPassword=$usuario->sPassword;
+include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
 
 
 // Creamos la conexión al servidor.
@@ -11,18 +15,14 @@ $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mys
 mysqli_set_charset($conexion,"utf8");
 
 // Consulta SQL para obtener los datos de los centros.
-$sql = "select count(*) from usuario where usuario='".$sUsuario."' and password='".$sPassword."'";
-$resultados = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
-
-
-$fila = mysqli_fetch_array($resultados);
-    
-if ($fila[0] == 0){
-    $salida =false;
-} else if($fila[0] > 0) {
-    $salida =true;
+$sql = "SELECT * FROM usuario WHERE usuario='".$sUsuario."' AND password='".$sPassword."'";
+$resultado = mysqli_query($conexion,$sql)->num_rows;
+if($resultado>0){
+    $salida["respuesta"]=true;
+}else{
+    $salida["respuesta"]=false;
 }
-
+$salida["usuario"]=$sUsuario;
 echo json_encode($salida);
 
 mysqli_close($conexion);

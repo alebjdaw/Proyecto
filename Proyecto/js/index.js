@@ -1,28 +1,22 @@
-$.getScript( "js/controlador.js", function( data, textStatus, jqxhr ) {
-    console.log( textStatus ); // Success
-    console.log( jqxhr.status ); // 200
-    console.log( "Load was performed." );
-  });
-$("#registroForm")[0].addEventListener("submit",registrarse);
-$("#loginForm")[0].addEventListener("submit",iniciarSesion);
 
-function iniciarSesion(sUsuario,sPassword){
-    var bComprobarUsuario=comprobarUsuario(sUsuario,sPassword);
-    if(bComprobarUsuario){
-        oUsuarioActivo=getUsuario(sUsuario);
-        if(oUsuarioActivo.bRol==1){
-            cargarUsuario();
-        }
-        else{
-            cargarAdmin();
-        }
-    }
-    else{
-        alert("El usuario o la contraseña son incorrectos.");
-    }
+    $.getScript( "./js/controlador.js");
+    $("#registroForm")[0].addEventListener("submit",registrarse);
+    $("#loginForm")[0].addEventListener("submit",comprobarUsuario);
+    $("#registroDni").change(function(){$("#registroDni")[0].setCustomValidity("");});
+    $("#registroUsuario").change(function(){$("#registroUsuario")[0].setCustomValidity("");});
+    $("#registroEmail").change(function(){$("#registroEmail")[0].setCustomValidity("");});
+    $("#loginUsuario").change(function(){$("#loginUsuario")[0].setCustomValidity("");});
+    $("#loginPassword").change(function(){$("#loginPassword")[0].setCustomValidity("");});
+
+
+
+function iniciarSesion(usuario){
+    
+    var oUsuario=setUsuarioActivo(usuario);
+    
 }
 
-function registrarse(){
+function registrarse(event){
     var sDni=$("#registroDni").val().trim();
     var sPassword=$("#registroPassword").val().trim();
     var sRepitePassword=$("#registroRepitePassword").val().trim();
@@ -32,88 +26,108 @@ function registrarse(){
     var sUsuario=$("#registroUsuario").val().trim();
     var sEmail=$("#registroEmail").val().trim();
 
-    if(sRepitePassword!=sPassword){
-        
+    
+    if(sRepitePassword!=sPassword){        
         $("#registroRepitePassword")[0].setCustomValidity("Las contraseñas deben ser iguales.");
-        $("#registroRepitePassword").focus();
-        
+        $("#registroRepitePassword").focus();    
     }
 
-    $.ajax({
-        url:"prueba.php",
-        async:false,
-        data:{ "sUsuario" : sUsuario},
-        dataType:"json",
-        sucess: function(data){
-            alert(data);
-        }
-    });
+    var oUsuario=new Usuario();
+        oUsuario.sApellidos=sApellidos;
+        oUsuario.sDni=sDni;
+        oUsuario.sPassword=sPassword;
+        oUsuario.sRol=sRol;
+        oUsuario.sNombre=sNombre;
+        oUsuario.sUsuario=sUsuario;
+        oUsuario.sEmail=sEmail;
     
+    var sParametros="datos="+JSON.stringify(oUsuario);
+
+    event.preventDefault();
+    $.post("./php/insert/altaUsuario.php", sParametros, procesoAltaUsuario, 'json');
     
     
 }
 
-function comprobarUsuario(sUsuario,sPassword){
-    bBoolean=false;
-    $.post( "php/select/comprobarUsuario.php", { "sUsuario" : sUsuario,"sPassword":sPassword}, null, "json" )
-    .done(function( data, textStatus, jqXHR ) {
-        bBoolean=data.bBoolean;
-        if ( console && console.log ) {
-            console.log( "La solicitud se ha completado correctamente." );
-        }
-    })
-    .fail(function( jqXHR, textStatus, errorThrown ) {
-        if ( console && console.log ) {
-            console.log( "La solicitud a fallado: " +  textStatus);
-        }
-    });
+function comprobarUsuario(event){
+    event.preventDefault();
+    var sUsuario=$("#loginUsuario").val().trim();
+    var sPassword=$("#loginPassword").val().trim();
+    
+    var oParametros={"sUsuario" : sUsuario,"sPassword":sPassword};
+    var sParametros="datos="+JSON.stringify(oParametros);
+    $.post( "./php/select/comprobarUsuario.php", sParametros,procesoComprobarUsuario,"json");
+    
+}
 
-    return bBoolean;
+function procesoComprobarUsuario(data){
+    if(data.respuesta){
+    
+        iniciarSesion(data.usuario);
+        if(oUsuarioActivo.bRol==1){
+            cargarUsuario(oUsuarioActivo);
+        }
+        else{
+            cargarAdmin(oUsuarioActivo);
+        }
+    }
+    else{
+        $("#loginUsuario")[0].setCustomValidity("El usuario o la contraseña son incorrectos.");
+        $("#loginPassword")[0].setCustomValidity("El usuario o la contraseña son incorrectos.");
+        $("#loginUsuario").val("");
+        $("#loginPassword").val("");
+    }
+}
+
+function cargarUsuario(oUsuario){
+    var jsonUsuario=JSON.stringify(oUsuario);
+    var sHtml="<form method='post' action='./listas.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
+    $('body').append(sHtml);
+    $('#formulario').submit();
 }
 
 function procesoAltaUsuario(data){
-    var sMensajeError=data.mensajeError;
-        var sMensaje=data.mensaje;
-        var sErrorUsuario=data.errorUsuario;
-        var sErrorDni=data.errorDni;
-        var sErrorEmail=data.errorEmail;
-        var bError=true;
-        var sErrores="";
+    
+    var sErrorUsuario=data.errorUsuario;
+    var sErrorDni=data.errorDni;
+    var sErrorEmail=data.errorEmail;
+    var bError=false;
+        
 
     if(sErrorUsuario!=undefined){
         $("#registroUsuario")[0].setCustomValidity(sErrorUsuario);
         $("#registroUsuario").focus();
         bError=true;
-        sErrores+=sErrorUsuario+"\n";
+        
     }
+    
     if(sErrorEmail!=undefined){
         $("#registroEmail")[0].setCustomValidity(sErrorEmail);
         if(!bError){
             $("#registroEmail").focus();
             bError=true;
         }
-        sErrores+=sErrorEmail+"\n";
-        
     }
+    
     if(sErrorDni!=undefined){
         $("#registroDni")[0].setCustomValidity(sErrorDni);
         if(!bError){
             $("#registroDni").focus();
             bError=true;
         }
-        sErrores+=sErrorDni+"\n";
-        
     }
-    if(sErrorMensaje!=undefined){
-        alert(sMensaje);
-        iniciarSesion(sUsuario,sPassword);
+    
+    if(!bError){
+        $("#registroModal").modal('toggle');
+        $("#loginModal").modal('toggle');
+
+        $("#registroDni").val("");
+        $("#registroPassword").val("");
+        $("#registroRepitePassword").val("");
+        $("#registroNombre").val("");
+        $("#registroApellidos").val("");
+        $("#registroUsuario").val("");
+        $("#registroEmail").val("");
     }
-    else{
-        if(sErrores!=""){
-            alert(sErrores);
-        }
-        else{
-            alert(sMensajeError);
-        }
-    }
+    
 }

@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en">
+<html>
   <head>
-    <title>Title</title>
+    <title>Tus listas</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,31 +9,35 @@
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/bienvenida.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/pepper-grinder/jquery-ui.css">
+    <link rel="stylesheet" href="./css/bienvenida.css">
+    
+    <link href="http://allfont.es/allfont.css?fonts=bookman-old-style" rel="stylesheet" type="text/css" />
   </head>
   <body>
     
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-        <div class="container">
-          <a class="navbar-brand" href="#">Start Bootstrap</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-light border border-dark border-top-0 shadow fixed-top">
+        <div class="container-fluid ml-5">
+          <a class="" href="#"><img id="logo" src="./imagenes/4.png"></a>
+          <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home
-                      <span class="sr-only">(current)</span>
-                    </a>
+                <a class="nav-link" href="#">Listas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="#">Listas compartidas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Services</a>
+                <a class="nav-link" href="#">Perfil</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="#">Papelera</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Salir</a>
               </li>
             </ul>
           </div>
@@ -42,31 +46,42 @@
       
       <!-- Full Page Image Header with Vertically Centered Content -->
       <header class="masthead">
-        <div class="container h-100">
+        <div class="container h-100 ">
           <div class="row h-100 align-items-center">
-            <div class="col-12 text-center">
-              <h1 class="font-weight-light">Vertically Centered Masthead Content</h1>
-              <p class="lead">A great starter layout for a landing page</p>
+            <div class="col-12 text-center shadow-lg  rounded border border " id="contenido">
+              <div class="row mt-4 align-items-center container">
+                <div id="titulo"></div>
+                
+              </div>
+              <hr>
+              
+              
+                          
             </div>
           </div>
         </div>
       </header>
       
       <!-- Page Content -->
-      <section class="py-5">
-        <div class="container">
-          <h2 class="font-weight-light">Page Content</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
-        </div>
+      <section id="footer" class="border border-dark">
+        <div class="bottom ">
+			<div class="container">
+				<div class="row">
+                    <div class="col-md-12 text-center mt-2">
+                        <div class="copyright">
+                            <p><span>Teléfono: &nbsp</span>999 999 999 &nbsp<span>Correo: &nbsp</span> correoFalso@invento.es &nbsp<span>Dirección: &nbsp</span> C/ Falsa Nº 14</p>
+                        </div>
+                        
+                    </div>
+					<div class="col-md-12 text-center">
+						<div class="copyright">
+							<p>© <span>2018</span> <a href="#" class="transition">Remember Me</a> All rights reserved.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
       </section>
       
       
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="js/index.js"></script>
-  </body>
-</html>
+  

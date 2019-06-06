@@ -1,34 +1,27 @@
-$.getScript( "js/objetos.js", function( data, textStatus, jqxhr ) {
-  console.log( textStatus ); // Success
-  console.log( jqxhr.status ); // 200
-  console.log( "Load was performed." );
-});
+$.getScript( "./js/objetos.js");
 
 
+function setUsuarioActivo(sUsuario){
+    
+    
+    $.ajax({
+        method: "POST",
+        url: "./php/select/getUsuario.php",
+        data: { "sUsuario" : sUsuario},
+        success: function(data){oUsuarioActivo=new Usuario();
+            oUsuarioActivo.sNombre=data.nombre;
+            oUsuarioActivo.sApellidos=data.apellidos;
+            oUsuarioActivo.sPassword=data.password;
+            oUsuarioActivo.sDni=data.dni;
+            oUsuarioActivo.sUsuario=data.usuario;
+            oUsuarioActivo.bRol=data.rol;
+            oUsuarioActivo.sEmail=data.email;},
+        async: false,
+        dataType: 'json'
+        
+    }); 
 
-
-
-function getUsuario(sUsuario){
-    oUsuario=new Usuario();
-    $.post( "php/select/getUsuario.php", { "sUsuario" : sUsuario}, null, "json" )
-    .done(function( data, textStatus, jqXHR ) {
-        oUsuario.sNombre=data.nombre;
-        oUsuario.sApellidos=data.apellidos;
-        oUsuario.sPassword=data.password;
-        oUsuario.sDni=data.dni;
-        oUsuario.sUsuario=data.usuario;
-        oUsuario.bRol=data.rol;
-        if ( console && console.log ) {
-            console.log( "La solicitud se ha completado correctamente." );
-        }
-    })
-    .fail(function( jqXHR, textStatus, errorThrown ) {
-        if ( console && console.log ) {
-            console.log( "La solicitud a fallado: " +  textStatus);
-        }
-    });
-
-    return oUsuario;
+    return oUsuarioActivo;
 }
 
 function getLista(sNombre){

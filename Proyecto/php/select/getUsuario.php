@@ -1,6 +1,6 @@
 <?php
 
-include("php/bbdd.php");
+include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
 
 $sUsuario=$_POST["sUsuario"];
 
