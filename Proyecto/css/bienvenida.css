@@ -1,6 +1,6 @@
-.masthead {
+body {
     
-    min-height: 1000px;
+    min-height: 100%;
     background-color: #f4faff;
     background-size: cover;
     background-position: center;
@@ -11,15 +11,20 @@
     display: block;
     
 }
-
+.lista{
+  width: 100%;
+}
+.lista2{
+  width: 10%;
+  margin: 0%;
+  padding: 0%;
+  height: 37px;
+}
 #footer{
   height: 150px;
   padding-top: 2%;
   background-color: #525151;
   
-}
-[name="lista"]{
-  background-color: #e3f2fd;
 }
 
 
@@ -32,16 +37,16 @@
 }
 
 #contenido{
-  min-height: 900px;
+  min-height: 800px;
   background-color: #fffcf6;
-  margin-top: 7%;
+  
 }
 
 nav{
   background-color: #e3f2fd;
 }
 
-h1{
+h2{
   font-family: Arial;
 }
 
