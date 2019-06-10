@@ -1,7 +1,8 @@
 <?php
 
 // Recojo los datos de entrada
-$sDni = $_POST["sDni"];
+$datosJSON = $_POST["datos"];
+$arrayItem=json_decode($datosJSON);
 $respuesta=[];
 include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
 
@@ -10,15 +11,12 @@ $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mys
 mysqli_set_charset($conexion,"utf8");
 
 // Consulta SQL para obtener los datos de los centros.
-$sql = "select * from lista where usuarioPropietario='".$sDni."' AND eliminada=0";
-$resultados = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
-
-while ($fila = mysqli_fetch_array($resultados)) {
-    $respuesta[] = $fila;
+for($i=0;$i<count($arrayItem);$i++){
+    $sql = "UPDATE `item` SET `orden` = ".$i." WHERE `item`.`id` = ".$arrayItem[$i].";";
+    $resultados = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 }
 
 
-echo json_encode($respuesta); 
 
 mysqli_close($conexion);
 ?>

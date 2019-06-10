@@ -3,7 +3,7 @@ $.ajax({
     url: "./js/controlador.js",
     dataType: "script"
 });
-
+hayCambio=[]
 var dialog = $("#modalAñadirLista").dialog({
     autoOpen: false,
     height: 350,
@@ -122,7 +122,12 @@ function introducirLista(oLista){
 
     $("#sortable_lista_cambiarListaId").attr("id","sortable_lista_"+oLista.iId);
     $( "#sortable_lista_"+oLista.iId ).sortable({
-        placeholder: "ui-state-highlight"
+        placeholder: "ui-state-highlight",
+        change: function(event,ui) {
+            idLista=ui.helper[0].parentElement.id.replace("sortable_lista_","");
+            hayCambio[idLista]="-Lista: "+$("#btn_collapse_lista_"+idLista).text();
+            
+        }
       });
     $( "#sortable_lista_"+oLista.iId ).disableSelection();
     $("#btn_añadirTarea_lista_cambiarListaId").attr("id","btn_añadirTarea_lista_"+oLista.iId);
@@ -202,7 +207,7 @@ function añadirItem($this){
         url: "./php/insert/altaItem.php",
         data: { "iId" : listaId},
         success: function(data){
-            console.log(data);
+            
             $("#item_cambiarItemId").attr("id","item_"+data.iId);
             $("#nombre_item_cambiarItemId").text(data.sNombre);
             $("#nombre_item_cambiarItemId").attr("id","nombre_item_"+data.iId);
@@ -218,11 +223,64 @@ function añadirItem($this){
 }
 
 function guardarLista($this){
-    var listaId=($this.attr("id").replace("btn_guardarLista_lista_",""));
+    listaId=($this.attr("id").replace("btn_guardarLista_lista_",""));
+    var ul=$("#sortable_lista_"+listaId);
+    var arrayIl=ul.children();
+    var arrayItem=[];
+    for (var i=0;i<arrayIl.length;i++){
+        arrayItem.push(arrayIl[i].id.replace("item_",""));
+    }
+    var datosJSON=JSON.stringify(arrayItem);
+    var sParametros="datos="+datosJSON;
+    $.post("./php/update/updateOrden.php", sParametros, function(){
+        
+        if(hayCambio[listaId]!=undefined){
+            delete hayCambio[listaId];
+        }
+        
+        $("body").append('<div id="dialog-message" title="Cambio realizado"><p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:10px 10px 50px 0;"></span>Se han realizado todos los cambios en la lista '+$("#btn_collapse_lista_"+listaId).text()+'</p></div>');
+        $( "#dialog-message" ).dialog({
+            modal: true,
+            buttons: {
+              Ok: function() {
+                $( this ).dialog( "close" );
+              }
+            }
+        });
+    });
 }
 
 function borrarLista($this){
-    var listaId=($this.attr("id").replace("btn_borrarLista_lista_",""));
+    listaId=($this.attr("id").replace("btn_borrarLista_lista_",""));
+    
+    
+    $.ajax({
+        method: "POST",
+        url: "./html/confirmModal2.html",
+        success: function(html){
+            $("#contenido").append(html);
+        },
+        async: false,
+        dataType: 'html'
+    });
+    
+    $( "#dialog-confirm2" ).dialog({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+          "Borrar": function() {
+            
+            $("#lista_"+listaId).remove();
+            $.post("./php/update/papeleraLista.php", {"listaId":listaId});
+            $( this ).dialog( "close");
+          },
+          "Cancelar": function() {
+            $( this ).dialog( "close" );
+          }
+        }
+      });
 }
 
 function compartirLista($this){
