@@ -1,0 +1,25 @@
+<form id="formModalAñadirLista">
+    <fieldset>
+      <table id="añadirTarea">
+        <tr>
+        <td>
+            <label for="nombreLista">Nombre:</label>
+        </td>
+        <td>
+            <input type="text" name="nombreLista" class="text ui-widget-content ui-corner-all">
+        </td>
+        <tr>
+          <td>
+              <label for="nombreTarea">Tarea:</label>
+          </td>
+          <td>
+              <input type="text" name="nombreTarea"  class="text ui-widget-content ui-corner-all">
+              
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger ml-3" onclick="eliminarTarea($(this).parent().parent())">x</button>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </form>

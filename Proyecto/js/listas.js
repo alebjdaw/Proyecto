@@ -4,6 +4,66 @@ $.ajax({
     dataType: "script"
 });
 
+var dialog = $("#modalAñadirLista").dialog({
+    autoOpen: false,
+    height: 350,
+    width: 400,
+    modal: true,
+    buttons: {
+      "Añadir tarea": function(){
+          $("#añadirTarea").append('<tr><td><label for="nombreTarea">Tarea:</label></td><td><input type="text" name="nombreTarea"  class="text ui-widget-content ui-corner-all"></td><td><button type="button" class="btn btn-danger ml-3" onclick="eliminarTarea($(this).parent().parent())">x</button></td></tr>');
+      },
+      "Crear": function(){
+          var nombreLista=$("input[name='nombreLista']")[0].value.trim();
+          var $tareas=$("input[name='nombreTarea']");
+          var arrayNombreTareas=[];
+          var datos={};
+          for(var i=0;i<$tareas.length;i++){
+              if($tareas[i].value.trim()!=""){
+                arrayNombreTareas.push($tareas[i].value.trim());
+              }
+              
+          }
+          datos.nombreLista=nombreLista;
+          datos.arrayNombreTareas=arrayNombreTareas;
+          datos.dniUsuario=oUsuarioActivo.sDni;
+          var sParametros="datos="+JSON.stringify(datos); 
+          $.post("./php/insert/altaLista.php", sParametros, procesoAltaLista, 'json');
+      },
+      "Cancelar": function() {
+        $("#formModalAñadirLista").remove();
+        $.ajax({
+            method: "POST",
+            url: "./html/formModalAñadirLista.html",
+            success: function(html){
+                $("#modalAñadirLista").append(html);
+            },
+            async: false,
+            dataType: 'html'
+        });
+        dialog.dialog( "close" );
+      }
+    },
+    close: function() {
+        $("#formModalAñadirLista").remove();
+        $.ajax({
+            method: "POST",
+            url: "./html/formModalAñadirLista.html",
+            success: function(html){
+                $("#modalAñadirLista").append(html);
+            },
+            async: false,
+            dataType: 'html'
+        });
+        dialog.dialog( "close" );
+    }
+  });
+
+    $( "#botonModalLista" ).button().on( "click", function() {
+        dialog.dialog( "open" );
+        });
+
+
 function cargarListas(sDni){
 
     $.ajax({
@@ -127,7 +187,34 @@ function detallesItem($this){
 }
 
 function añadirItem($this){
-    var listaId=($this.attr("id").replace("btn_añadirTarea_lista_",""));
+    listaId=($this.attr("id").replace("btn_añadirTarea_lista_",""));
+    $.ajax({
+        method: "POST",
+        url: "./html/item.html",
+        success: function(html){
+            $("#sortable_lista_"+listaId).append(html);
+        },
+        async: false,
+        dataType: 'html'
+    });
+    $.ajax({
+        method: "POST",
+        url: "./php/insert/altaItem.php",
+        data: { "iId" : listaId},
+        success: function(data){
+            console.log(data);
+            $("#item_cambiarItemId").attr("id","item_"+data.iId);
+            $("#nombre_item_cambiarItemId").text(data.sNombre);
+            $("#nombre_item_cambiarItemId").attr("id","nombre_item_"+data.iId);
+            $("#nombre_item_cambiarItemId").attr("id","nombre_item_"+data.iId);
+            $("#eliminar_item_cambiarItemId").attr("id","eliminar_item_"+data.iId);
+            $("#detalles_item_cambiarItemId").attr("id","detalles_item_"+data.iId);
+             
+        },
+        async: false,
+        dataType: 'json'
+    });
+
 }
 
 function guardarLista($this){
@@ -140,4 +227,23 @@ function borrarLista($this){
 
 function compartirLista($this){
     var listaId=($this.attr("id").replace("btn_compartirLista_lista_",""));
+}
+
+function eliminarTarea($tarea){
+    $tarea.remove();
+}
+
+function procesoAltaLista(data){
+    
+    var sErrorLista=data.errorNombreLista;
+    if(sErrorLista!=undefined){
+        $("input[name='nombreLista']")[0].setCustomValidity(sErrorLista);
+        $("input[name='nombreLista']")[0].focus();
+        bError=true;
+        
+    }
+    else{
+        $("#contenedorListas").empty();
+        cargarListas(oUsuarioActivo.sDni);
+    }
 }

@@ -52,7 +52,7 @@
           
             <div class="row mt-3 ml-3">
               <h2>Crea una lista:</h2>
-              <button class="ml-3 btn btn-dark h-75" type="button" id="botonModalLista">+</button>
+              <button class="ml-3" type="button" id="botonModalLista">+</button>
             </div>
             <hr>
                
@@ -72,15 +72,17 @@
 			<div class="container">
 				<div class="row">
                     <div class="col-md-12 text-center mt-2">
-                        <div class="copyright">
-                            <p><span>Teléfono: &nbsp</span>999 999 999 &nbsp<span>Correo: &nbsp</span> correoFalso@invento.es &nbsp<span>Dirección: &nbsp</span> C/ Falsa Nº 14</p>
-                        </div>
+                    
+                            <span>Teléfono: &nbsp</span>999 999 999
+                            <span>Correo: &nbsp</span> correoFalso@invento.es
+                            <span>Dirección: &nbsp</span> C/ Falsa Nº 14
+                        
                         
                     </div>
 					<div class="col-md-12 text-center">
-						<div class="copyright">
+						
 							<p>© <span>2018</span> <a href="#" class="transition">Remember Me</a> All rights reserved.</p>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -90,31 +92,29 @@
       <div id="modalAñadirLista" title="Crea una nueva lista">
           <p class="validateTips">Solo el nombre es requerido.</p>
          
-          <form>
+          <form id="formModalAñadirLista">
             <fieldset>
-              <table>
+              <table id="añadirTarea">
                 <tr>
                 <td>
                     <label for="nombreLista">Nombre:</label>
                 </td>
                 <td>
-                    <input type="text" name="nombreLista" id="nombreLista" class="text ui-widget-content ui-corner-all">
+                    <input type="text" name="nombreLista" class="text ui-widget-content ui-corner-all">
                 </td>
                 <tr>
                   <td>
-                      <label for="nombreItem_1">Tarea:</label>
+                      <label for="nombreTarea">Tarea:</label>
                   </td>
                   <td>
-                      <input type="text" name="nombreLista" id="nombreLista" class="text ui-widget-content ui-corner-all">
+                      <input type="text" name="nombreTarea"  class="text ui-widget-content ui-corner-all">
+                      
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger ml-3" onclick="eliminarTarea($(this).parent().parent())">x</button>
                   </td>
                 </tr>
               </table>
-              
-              
-              
-              
-              
-
             </fieldset>
           </form>
         </div>
