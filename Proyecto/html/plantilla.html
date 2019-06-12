@@ -26,10 +26,10 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Listas</a>
+                <a class="nav-link" onclick="cargarUsuario()">Listas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Listas compartidas</a>
+                <a class="nav-link" onclick="cargarListasCompartidas()">Listas compartidas</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Perfil</a>
@@ -49,9 +49,16 @@
       
         <div class="container text-center shadow-lg  rounded border border h-100 mt-5 mb-5" id="contenido">
           
+          <div class="row mt-3 ml-3">
+            <h2>Listas que otros han compartido contigo:</h2>
+          </div>
+          <hr>
+             
+          <div class="row container" id="contenedorListas">
+           
+
             
-              
-               
+          </div>                 
                           
             
         </div>  

@@ -4,6 +4,7 @@
     $("#loginForm")[0].addEventListener("submit",comprobarUsuario);
     $("#registroDni").change(function(){$("#registroDni")[0].setCustomValidity("");});
     $("#registroUsuario").change(function(){$("#registroUsuario")[0].setCustomValidity("");});
+    $("#registroRepitePassword").change(function(){$("#registroRepitePassword")[0].setCustomValidity("");});
     $("#registroEmail").change(function(){$("#registroEmail")[0].setCustomValidity("");});
     $("#loginUsuario").change(function(){$("#loginUsuario")[0].setCustomValidity("");});
     $("#loginPassword").change(function(){$("#loginPassword")[0].setCustomValidity("");});
@@ -12,7 +13,7 @@
 
 function iniciarSesion(usuario){
     
-    var oUsuario=setUsuarioActivo(usuario);
+    oUsuarioActivo=setUsuarioActivo(usuario);
     
 }
 
@@ -65,10 +66,10 @@ function procesoComprobarUsuario(data){
     
         iniciarSesion(data.usuario);
         if(oUsuarioActivo.bRol==1){
-            cargarUsuario(oUsuarioActivo);
+            cargarUsuario();
         }
         else{
-            cargarAdmin(oUsuarioActivo);
+            cargarAdmin();
         }
     }
     else{
@@ -79,12 +80,7 @@ function procesoComprobarUsuario(data){
     }
 }
 
-function cargarUsuario(oUsuario){
-    var jsonUsuario=JSON.stringify(oUsuario);
-    var sHtml="<form method='post' action='./listas.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
-    $('body').append(sHtml);
-    $('#formulario').submit();
-}
+
 
 function procesoAltaUsuario(data){
     

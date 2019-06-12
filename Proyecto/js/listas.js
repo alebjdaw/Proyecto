@@ -3,7 +3,7 @@ $.ajax({
     url: "./js/controlador.js",
     dataType: "script"
 });
-hayCambio=[]
+
 var dialog = $("#modalAñadirLista").dialog({
     autoOpen: false,
     height: 350,
@@ -15,20 +15,27 @@ var dialog = $("#modalAñadirLista").dialog({
       },
       "Crear": function(){
           var nombreLista=$("input[name='nombreLista']")[0].value.trim();
-          var $tareas=$("input[name='nombreTarea']");
-          var arrayNombreTareas=[];
-          var datos={};
-          for(var i=0;i<$tareas.length;i++){
-              if($tareas[i].value.trim()!=""){
-                arrayNombreTareas.push($tareas[i].value.trim());
-              }
-              
+          if(nombreLista===""){
+            $("input[name='nombreLista']")[0].setCustomValidity("Debe introducir un nombre.");
+            $("input[name='nombreLista']")[0].focus();
           }
-          datos.nombreLista=nombreLista;
-          datos.arrayNombreTareas=arrayNombreTareas;
-          datos.dniUsuario=oUsuarioActivo.sDni;
-          var sParametros="datos="+JSON.stringify(datos); 
-          $.post("./php/insert/altaLista.php", sParametros, procesoAltaLista, 'json');
+          else{
+            var $tareas=$("input[name='nombreTarea']");
+            var arrayNombreTareas=[];
+            var datos={};
+            for(var i=0;i<$tareas.length;i++){
+                if($tareas[i].value.trim()!=""){
+                  arrayNombreTareas.push($tareas[i].value.trim());
+                }
+                
+            }
+            datos.nombreLista=nombreLista;
+            datos.arrayNombreTareas=arrayNombreTareas;
+            datos.dniUsuario=oUsuarioActivo.sDni;
+            var sParametros="datos="+JSON.stringify(datos); 
+            $.post("./php/insert/altaLista.php", sParametros, procesoAltaLista, 'json');
+          }
+
       },
       "Cancelar": function() {
         $("#formModalAñadirLista").remove();
@@ -125,7 +132,7 @@ function introducirLista(oLista){
         placeholder: "ui-state-highlight",
         change: function(event,ui) {
             idLista=ui.helper[0].parentElement.id.replace("sortable_lista_","");
-            hayCambio[idLista]="-Lista: "+$("#btn_collapse_lista_"+idLista).text();
+            hayCambio["lista_"+idLista]="-Lista: "+$("#btn_collapse_lista_"+idLista).text();
             
         }
       });
@@ -234,8 +241,8 @@ function guardarLista($this){
     var sParametros="datos="+datosJSON;
     $.post("./php/update/updateOrden.php", sParametros, function(){
         
-        if(hayCambio[listaId]!=undefined){
-            delete hayCambio[listaId];
+        if(hayCambio["lista_"+listaId]!=undefined){
+            delete hayCambio["lista_"+listaId];
         }
         
         $("body").append('<div id="dialog-message" title="Cambio realizado"><p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:10px 10px 50px 0;"></span>Se han realizado todos los cambios en la lista '+$("#btn_collapse_lista_"+listaId).text()+'</p></div>');
@@ -284,7 +291,94 @@ function borrarLista($this){
 }
 
 function compartirLista($this){
-    var listaId=($this.attr("id").replace("btn_compartirLista_lista_",""));
+    listaId=($this.attr("id").replace("btn_compartirLista_lista_",""));
+    $.ajax({
+        method: "POST",
+        url: "./html/modalSeleccionarUsuario.html",
+        success: function(html){
+            $("#contenido").append(html);
+        },
+        async: false,
+        dataType: 'html'
+    });
+    $(document).ready(function() {
+        $.ajax({
+            method: "POST",
+            url: "./php/select/getUsuarios.php",
+            data:{"sDni":oUsuarioActivo.sDni, "iId":listaId},
+            success: function(data){
+                for(var i=0;i<data.usuariosCompartidos.length;i++){
+                    $("#introducirUsuarios").append("<tr><td><input type='checkbox' id='"+data.usuariosCompartidos[i].usuario+"' checked></td><td>"+data.usuariosCompartidos[i].usuario+"</td><td>"+data.usuariosCompartidos[i].email+"</td></tr>")
+                }
+                for(var i=0;i<data.usuariosNoCompartidos.length;i++){
+                    $("#introducirUsuarios").append("<tr><td><input type='checkbox' id='"+data.usuariosNoCompartidos[i].usuario+"'></td><td>"+data.usuariosNoCompartidos[i].usuario+"</td><td>"+data.usuariosNoCompartidos[i].email+"</td></tr>")
+                }                
+            },
+            async: false,
+            dataType: 'json'
+        });
+        $('#dateTable').DataTable( {            
+            scrollY:        200,
+            scrollCollapse: true,
+            
+            "language":{
+                "emptyTable": "No hay información disponible",
+                "info": "",
+                "infoEmpty":"",
+                "infoFiltered":"",
+                "infoPostFix":"",
+                "thousands":".",
+                "lengthMenu":"Muestra _MENU_",
+                "loadingRecords":"Cargando...",
+                "processing":"Procesando...",
+                "search":"Buscar",
+                "zeroRecords": "No se ha encontrado resultado",
+                "paginate":{
+                    "next":">",
+                    "previous":"<"
+                },
+                "aria":{
+                    "sortAscending":"",
+                    "sortDescending":""
+                }
+            }
+        } );
+    } );
+    $("#modalSeleccionarUsuario").dialog({
+        autoOpen: true,
+        width: 'auto', 
+        maxWidth: 600,
+        height: 'auto',
+        modal: true,
+        fluid: true, 
+        resizable: false,
+        position: { my: "center bottom", at: "center center", of: window },
+        buttons: {
+            "Cancelar":function(){
+                $("#modalSeleccionarUsuario").remove();
+            },
+            "Compartir":function(){
+                var usuariosCompartidos = [];
+                $('#introducirUsuarios input:checked').each(function() {
+                    usuariosCompartidos.push($(this).attr('id'));
+                });
+                $.ajax({
+                    method: "POST",
+                    url: "./php/insert/insertListaCompartida.php",
+                    data:{"sDni":oUsuarioActivo.sDni, "iId":listaId,"usuariosCompartidos":JSON.stringify(usuariosCompartidos)},
+                    success: function(data){
+                        console.log("lo he hecho porque soy la polla");    
+                    },
+                    async: false
+                });
+            }
+        },
+        close: function(){
+            $("#modalSeleccionarUsuario").remove();
+        }
+    });
+    
+     
 }
 
 function eliminarTarea($tarea){
