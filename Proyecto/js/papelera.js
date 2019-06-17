@@ -259,3 +259,33 @@ function borrarLista($this){
         }
       });
 }
+
+function vaciarPapelera(){
+    $.ajax({
+        method: "POST",
+        url: "./html/confirmModal7.html",
+        success: function(html){
+            $("#contenido").append(html);
+        },
+        async: false,
+        dataType: 'html'
+    });
+    
+    $( "#dialog-confirm7" ).dialog({
+        resizable: false,
+        height: "auto",
+        width: 400,
+        modal: true,
+        buttons: {
+          "Borrar": function() {
+            
+            $("#contenedorListas").empty();
+            $.post("./php/delete/eliminarTodo.php",{"sDni":oUsuarioActivo.sDni});
+            $( this ).dialog( "close");
+          },
+          "Cancelar": function() {
+            $( this ).dialog( "close" );
+          }
+        }
+      });
+}

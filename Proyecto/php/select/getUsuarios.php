@@ -1,6 +1,6 @@
 <?php
 
-include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
+include("../bbdd.php");
 
 $sDni=$_POST["sDni"];
 $iId=$_POST["iId"];

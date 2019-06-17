@@ -1,6 +1,28 @@
-$.getScript( "./js/objetos.js");
+$.ajax({
+    async: false,
+    url: "./js/objetos.js",
+    dataType: "script"
+});
 hayCambio=[];
+oUsuarioActivo=new Usuario();
+$(document).ready(notificacion);
 
+function notificacion(){
+    if(oUsuarioActivo.sDni!=null){
+        
+        $.ajax({
+            method: "POST",
+            url: "./php/select/getNumNotificaciones.php",
+            data: { "sDni" : oUsuarioActivo.sDni},
+            success: function(data){
+                
+                $(".numeroNotificaciones").text(JSON.parse(data));},
+            async: false,
+            dataType: 'json'
+            
+        }); 
+    }
+}
 function setUsuarioActivo(sUsuario){
     
     
@@ -111,6 +133,33 @@ function cargarUsuario(){
 
 }
 
+function cargarAdmin(){
+    
+        var jsonUsuario=JSON.stringify(oUsuarioActivo);
+        var sHtml="<form method='post' action='./adminUsuarios.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
+        $('body').append(sHtml);
+        $('#formulario').submit();
+    
+    
+
+}
+
+function cargarAdminListas(){
+
+        var jsonUsuario=JSON.stringify(oUsuarioActivo);
+        var sHtml="<form method='post' action='./adminListas.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
+        $('body').append(sHtml);
+        $('#formulario').submit();
+}
+
+function cargarAdminItems(){
+    
+        var jsonUsuario=JSON.stringify(oUsuarioActivo);
+        var sHtml="<form method='post' action='./adminItems.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
+        $('body').append(sHtml);
+        $('#formulario').submit();
+}
+
 function cargarListasCompartidas(){
 
     if(Object.keys(hayCambio).length>0){
@@ -187,6 +236,47 @@ function cargarPapelera(){
     else{
         var jsonUsuario=JSON.stringify(oUsuarioActivo);
         var sHtml="<form method='post' action='./papelera.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
+        $('body').append(sHtml);
+        $('#formulario').submit();
+    } 
+    
+
+}
+function cargarNotificaciones(){
+    if(Object.keys(hayCambio).length>0){
+        $.ajax({
+            method: "POST",
+            url: "./html/confirmModal3.html",
+            success: function(html){
+                $("#contenido").append(html);
+                for(var i=0; i<Object.keys(hayCambio).length;i++){
+                    $("#dialog-confirm3").append("<p>"+hayCambio[Object.keys(hayCambio)[i]]+"</p>");
+                }
+            },
+            async: false,
+            dataType: 'html'
+        });
+        
+        $( "#dialog-confirm3" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+              "Estoy seguro": function() {
+                hayCambio=[];
+                cargarNotificaciones();
+                $( this ).dialog( "close");
+              },
+              "Cancelar": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+          });
+    }
+    else{
+        var jsonUsuario=JSON.stringify(oUsuarioActivo);
+        var sHtml="<form method='post' action='./notificaciones.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
         $('body').append(sHtml);
         $('#formulario').submit();
     } 

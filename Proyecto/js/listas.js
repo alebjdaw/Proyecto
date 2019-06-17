@@ -254,6 +254,11 @@ function detallesItem($this){
         buttons: {
           "Modificar": function(event){
               if( event.target.firstChild.nodeValue==="Guardar cambios"){
+                    
+                    if($("#nombreItem").val()==""){
+                        $("#nombreItem")[0].setCustomValidity("Debe introducir un nombre para la tarea.");
+                        return;
+                    }
                     event.target.firstChild.nodeValue="Modificar";
                     $("#descripcionItem")[0].disabled=true;
                     $("#avisoItem")[0].disabled=true;
@@ -271,7 +276,7 @@ function detallesItem($this){
                 });
               }
               else{
-                  console.log(event);
+                  
                     event.target.firstChild.nodeValue="Guardar cambios";
                     $("#descripcionItem")[0].disabled=false;
                     $("#avisoItem")[0].disabled=false;

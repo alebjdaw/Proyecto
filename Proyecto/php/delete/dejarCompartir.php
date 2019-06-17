@@ -4,7 +4,7 @@
 $idLista = $_POST["listaId"];
 $dni=$_POST["dni"];
 
-include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
+include("../bbdd.php");
 
 // Creamos la conexión al servidor.
 $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mysqli_error($conexion));

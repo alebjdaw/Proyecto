@@ -4,7 +4,7 @@ if(isset($_FILES['fichero_usuario']['name'])){
    
     $iId=$_POST['iId'];
     //Include database configuration file
-    include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
+    include("./bbdd.php");
     // Creamos la conexión al servidor.
     $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mysqli_error($conexion));
     mysqli_set_charset($conexion,"utf8");

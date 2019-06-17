@@ -7,13 +7,12 @@ $usuario = json_decode($datosJSON);
 
 $sDni=$usuario->sDni;
 $sPassword=$usuario->sPassword; 
-$sRol=$usuario->sRol;
 $sNombre=$usuario->sNombre;
 $sApellidos=$usuario->sApellidos;
-$sUsuario=$usuario->sUsuario;
 $sEmail=$usuario->sEmail;
-
-$bInserta=true;
+$mismoCorreo=$usuario->mismoCorreo;
+$respuesta=[];
+$bUpdate=true;
 
 include("../bbdd.php");
 
@@ -21,30 +20,18 @@ include("../bbdd.php");
 $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mysqli_error($conexion));
 mysqli_set_charset($conexion,"utf8");
 
-$sql="SELECT * FROM usuario WHERE usuario='".$sUsuario."'";
-$resultado = mysqli_query($conexion,$sql)->num_rows;
-if($resultado>0){
-    $respuesta["errorUsuario"]="El usuario ya está en uso. Use uno distinto.";
-    $bInserta=false;
-}
 
-$sql="SELECT * FROM usuario WHERE dni='".$sDni."'";
-$resultado = mysqli_query($conexion,$sql)->num_rows;
-if($resultado>0){
-    $respuesta["errorDni"]="El DNI ya está en uso. Use uno distinto.";
-    $bInserta=false;
-}
 
 $sql="SELECT * FROM usuario WHERE email='".$sEmail."'";
 $resultado = mysqli_query($conexion,$sql)->num_rows;
-if($resultado>0){
+if($resultado>0 && !$mismoCorreo){
     $respuesta["errorEmail"]="El E-mail ya está en uso. Use uno distinto.";
-    $bInserta=false;
+    $bUpdate=false;
 }
 
-if($bInserta){
+if($bUpdate){
 
-    $sql = "INSERT INTO usuario (dni,password,nombre,apellidos,usuario, rol,email) VALUES ('".$sDni."','".$sPassword."','".$sNombre."','".$sApellidos."','".$sUsuario."','".$sRol."','".$sEmail."')";
+    $sql = "UPDATE `usuario` SET `password` = '".$sPassword."', `nombre` = '".$sNombre."', `apellidos` = '".$sApellidos."', `email` = '".$sEmail."' WHERE `usuario`.`dni` = '".$sDni."';";
     $resultado = mysqli_query($conexion,$sql);
 
 }

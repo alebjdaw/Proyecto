@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tus listas</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/blitzer/jquery-ui.css">
+    <link rel="stylesheet" href="./css/bienvenida.css">
+    
+    
+    <link href="http://allfont.es/allfont.css?fonts=bookman-old-style" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light border border-dark border-top-0 shadow">
+        <div class="container-fluid ">
+          <img class="img-fuid navbar-brand" id="logo" src="./imagenes/4.png">
+          <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" onclick="cargarUsuario()">Listas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="cargarListasCompartidas()">Listas compartidas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="cargarPerfil()">Perfil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="cargarPapelera()">Papelera</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="cargarNotificaciones()">Notificaciones <span class="numeroNotificaciones">0</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onclick="salir()">Salir</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      
+      
+        <div class="container text-center shadow-lg  rounded border border h-100 mt-5 mb-5" id="contenido">
+          
+          <div class="row mt-3 ml-3">
+            <h2>Tu perfil:</h2>
+          </div>
+          <hr>
+             
+          <div class="row container " id="contenedorFormulario">
+            <form id="formularioPerfil">
+              <fieldset>
+                <table class="table table-dark table-striped table-borderred" style="width:150%; position: relative; left: 55%">
+                  <tr>
+                    <td><label for="dniUsuario">Dni:</label></td>
+                    <td><input type="text" name="dniUsuario" id="dniUsuario" class="text ui-widget-content ui-corner-all" disabled></td>
+                  </tr>
+                  <tr>
+                    <td><label for="usuarioUsuario">Usuario:</label></td>
+                    <td><input type="text" name="usuarioUsuario" id="usuarioUsuario" class="text ui-widget-content ui-corner-all"  pattern="^([a-z]+[0-9]{0,2}){5,12}$" disabled required></td>
+                  </tr>
+                  <tr>
+                    <td><label for="nombreUsuario">Nombre:</label></td>
+                    <td><input type="text" name="nombreUsuario" id="nombreUsuario" class="text ui-widget-content ui-corner-all" disabled required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,15}"></td>
+                  </tr>
+                  <tr>
+                    <td><label for="apellidosUsuario">Apellidos:</label></td>
+                    <td><input type="text" name="apellidosUsuario" id="apellidosUsuario" class="text ui-widget-content ui-corner-all" disabled required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,15}"></td>
+                  </tr>
+                  <tr>
+                    <td><label for="correoUsuario">Correo:</label></td>
+                    <td><input type="text" name="correoUsuario" id="correoUsuario" class="text ui-widget-content ui-corner-all" disabled pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" required></td>
+                  </tr>
+                  <tr>
+                    <td><label for="contraseñaUsuario">Contraseña:</label></td>
+                    <td><input type="password" name="contraseñaUsuario" id="contraseñaUsuario" class="text ui-widget-content ui-corner-all" disabled pattern="[A-Za-z0-9!?-]{5,12}" required></td>
+                  </tr>
+                  <tr style="display: none;" id="ocultoRepiteContraseña">
+                      <td><label for="repiteContraseñaUsuario">Repite la contraseña:</label></td>
+                      <td><input type="password" name="repiteContraseñaUsuario" id="repiteContraseñaUsuario" class="text ui-widget-content ui-corner-all" pattern="[A-Za-z0-9!?-]{5,12}" required></td>
+                    </tr>
+                  <tr>
+                    
+                    <td><input class="m-2" type="checkbox" onclick="mostrarContraseña()">Mostrar contraseña</td>
+                  </tr>
+                  
+                  
+                  <tr id="botones">
+                    <td colspan="2"><button type="button" class="btn btn-light" id="btnModificarDatos" onclick="modificarDatos()">Modificar datos</button></td>
+                  </tr>
+                </table>
+              </fieldset>
+            </form>
+
+            
+          </div>                 
+                          
+            
+        </div>  
+        
+      
+      
+      <!-- Page Content -->
+      <section id="footer" class="border border-dark">
+        <div class="bottom ">
+			<div class="container">
+				<div class="row">
+                    <div class="col-md-12 text-center mt-2">
+                        <div class="copyright">
+                            <p><span>Teléfono: &nbsp</span>999 999 999 &nbsp<span>Correo: &nbsp</span> correoFalso@invento.es &nbsp<span>Dirección: &nbsp</span> C/ Falsa Nº 14</p>
+                        </div>
+                        
+                    </div>
+					<div class="col-md-12 text-center">
+						<div class="copyright">
+							<p>© <span>2018</span> <a href="#" class="transition">Remember Me</a> All rights reserved.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+      </section>
+      
+      
+  

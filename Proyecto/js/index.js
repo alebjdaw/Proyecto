@@ -1,5 +1,9 @@
 
-    $.getScript( "./js/controlador.js");
+    $.ajax({
+        async: false,
+        url: "./js/controlador.js",
+        dataType: "script"
+    });
     $("#registroForm")[0].addEventListener("submit",registrarse);
     $("#loginForm")[0].addEventListener("submit",comprobarUsuario);
     $("#registroDni").change(function(){$("#registroDni")[0].setCustomValidity("");});

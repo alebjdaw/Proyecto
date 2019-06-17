@@ -7,7 +7,7 @@ $usuario = json_decode($datosJSON);
 //Recoger parametro
 $sUsuario=$usuario->sUsuario;
 $sPassword=$usuario->sPassword;
-include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
+include("../bbdd.php");
 
 
 // Creamos la conexión al servidor.

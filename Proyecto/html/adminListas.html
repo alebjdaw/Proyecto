@@ -26,24 +26,17 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" onclick="cargarUsuario()">Listas</a>
+                <a class="nav-link" onclick="cargarAdmin()">Usuarios</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" onclick="cargarListasCompartidas()">Listas compartidas</a>
+                <a class="nav-link" onclick="cargarAdminListas()">Listas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" onclick="cargarPerfil()">Perfil</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" onclick="cargarPapelera()">Papelera</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" onclick="cargarNotificaciones()">Notificaciones<span class="numeroNotificaciones">0</span></a>
+                <a class="nav-link" onclick="cargarAdminItems()">Items</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" onclick="salir()">Salir</a>
               </li>
-              
             </ul>
           </div>
         </div>
@@ -54,13 +47,25 @@
         <div class="container text-center shadow-lg  rounded border border h-100 mt-5 mb-5" id="contenido">
           
           <div class="row mt-3 ml-3">
-            <h2>Listas que otros han compartido contigo:</h2>
+            <h2>Listas:</h2>
           </div>
           <hr>
              
-          <div class="row container" id="contenedorListas">
+          <div class=" container" id="contenedorListas">
            
-
+            <table id="dateTable" class="table table-striped table-borderred" >
+              <thead class="thead-dark">
+                  <tr>
+                      <th>ID</th>
+                      <th>Nombre</th>
+                      <th>Usuario propietario</th>
+                      <th>Estado</th>                
+                  </tr>
+              </thead>
+              <tbody id="introducirListas">
+              
+              </tbody>
+          </table>
             
           </div>                 
                           
@@ -69,26 +74,7 @@
         
       
       
-      <!-- Page Content -->
-      <section id="footer" class="border border-dark">
-        <div class="bottom ">
-			<div class="container">
-				<div class="row">
-                    <div class="col-md-12 text-center mt-2">
-                        <div class="copyright">
-                            <p><span>Teléfono: &nbsp</span>999 999 999 &nbsp<span>Correo: &nbsp</span> correoFalso@invento.es &nbsp<span>Dirección: &nbsp</span> C/ Falsa Nº 14</p>
-                        </div>
-                        
-                    </div>
-					<div class="col-md-12 text-center">
-						<div class="copyright">
-							<p>© <span>2018</span> <a href="#" class="transition">Remember Me</a> All rights reserved.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-      </section>
+     
       
       
   
