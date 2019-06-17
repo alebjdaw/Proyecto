@@ -5,12 +5,12 @@
     
     
 
-    include("./html/listasCompartidas.html");
+    include("./html/papelera.html");
     include("./html/scripts.html");
     
 ?>
 
-    <script type="text/javascript" src="./js/listasCompartidas.js"></script>
+    <script type="text/javascript" src="./js/papelera.js"></script>
     <script type="text/javascript" >
         
         oUsuarioActivo=<?php echo $datosJSON;?>;        

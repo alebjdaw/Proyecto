@@ -10,7 +10,7 @@ $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mys
 mysqli_set_charset($conexion,"utf8");
 
 // Consulta SQL para obtener los datos de los centros.
-$sql = "select * from item where lista='".$iId."' order by(orden)";
+$sql = "select * from item where lista='".$iId."' AND fechaBaja IS NULL order by(orden)";
 $resultados = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 
 while ($fila = mysqli_fetch_array($resultados)) {

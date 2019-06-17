@@ -1,7 +1,8 @@
 <?php
 
 // Recojo los datos de entrada
-$idItem = $_POST["itemId"];
+$idLista = $_POST["listaId"];
+$dni=$_POST["dni"];
 
 include("C:/xampp/htdocs/Proyecto/php/bbdd.php");
 
@@ -10,7 +11,7 @@ $conexion = mysqli_connect($servidor, $usuario, $password,$basedatos) or die(mys
 mysqli_set_charset($conexion,"utf8");
 
 // Consulta SQL para obtener los datos de los centros.
-$sql = "UPDATE `item` SET `fechaBaja` = CURRENT_TIMESTAMP WHERE `item`.`id` ='".$idItem."'";
+$sql = "DELETE FROM `usuario-lista` WHERE `usuario-lista`.`usuarioNoPropietario` = '".$dni."' AND `usuario-lista`.`listaCompartida` =".$idLista;
 $resultados = mysqli_query($conexion,$sql) or die(mysqli_error($conexion));
 
 

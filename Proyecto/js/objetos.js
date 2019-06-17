@@ -22,7 +22,7 @@ class Lista{
 }
 
 class Item{
-    constructor(iId,sNombre,sDescripcion,dFechaAlta,dFechaBaja,dFechaAviso,sFicheroImagen,iLista){
+    constructor(iId,sNombre,sDescripcion,dFechaAlta,dFechaBaja,dFechaAviso,sFicheroImagen,iLista,iOrden){
         this.iId=iId;
         this.sNombre=sNombre;
         this.sDescripcion=sDescripcion;
@@ -31,6 +31,7 @@ class Item{
         this.dFechaAviso=dFechaAviso;
         this.sFicheroImagen=sFicheroImagen;
         this.iLista=iLista;
+        this.iOrden=iOrden;
     }
     
 }

@@ -1,6 +1,6 @@
 <?php 
     $datosJSON = $_POST['usuario'];
-    if(isset($datosJSON)){
+    if(isset($datosJSON) && $datosJSON!=null){
 
     
     

@@ -151,3 +151,130 @@ function cargarListasCompartidas(){
         $('#formulario').submit();
     }   
 }
+
+function cargarPapelera(){
+    if(Object.keys(hayCambio).length>0){
+        $.ajax({
+            method: "POST",
+            url: "./html/confirmModal3.html",
+            success: function(html){
+                $("#contenido").append(html);
+                for(var i=0; i<Object.keys(hayCambio).length;i++){
+                    $("#dialog-confirm3").append("<p>"+hayCambio[Object.keys(hayCambio)[i]]+"</p>");
+                }
+            },
+            async: false,
+            dataType: 'html'
+        });
+        
+        $( "#dialog-confirm3" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+              "Estoy seguro": function() {
+                hayCambio=[];
+                cargarUsuario();
+                $( this ).dialog( "close");
+              },
+              "Cancelar": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+          });
+    }
+    else{
+        var jsonUsuario=JSON.stringify(oUsuarioActivo);
+        var sHtml="<form method='post' action='./papelera.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
+        $('body').append(sHtml);
+        $('#formulario').submit();
+    } 
+    
+
+}
+
+function salir(){
+    if(Object.keys(hayCambio).length>0){
+        $.ajax({
+            method: "POST",
+            url: "./html/confirmModal3.html",
+            success: function(html){
+                $("#contenido").append(html);
+                for(var i=0; i<Object.keys(hayCambio).length;i++){
+                    $("#dialog-confirm3").append("<p>"+hayCambio[Object.keys(hayCambio)[i]]+"</p>");
+                }
+            },
+            async: false,
+            dataType: 'html'
+        });
+        
+        $( "#dialog-confirm3" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+              "Estoy seguro": function() {
+                hayCambio=[];
+                cargarUsuario();
+                $( this ).dialog( "close");
+              },
+              "Cancelar": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+          });
+    }
+    else{
+        oUsuarioActivo=null;
+        var sHtml="<form method='post' action='./listas.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value=''/></form>";
+        $('body').append(sHtml);
+        $('#formulario').submit();
+    } 
+    
+
+}
+
+function cargarPerfil(){
+    if(Object.keys(hayCambio).length>0){
+        $.ajax({
+            method: "POST",
+            url: "./html/confirmModal3.html",
+            success: function(html){
+                $("#contenido").append(html);
+                for(var i=0; i<Object.keys(hayCambio).length;i++){
+                    $("#dialog-confirm3").append("<p>"+hayCambio[Object.keys(hayCambio)[i]]+"</p>");
+                }
+            },
+            async: false,
+            dataType: 'html'
+        });
+        
+        $( "#dialog-confirm3" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+              "Estoy seguro": function() {
+                hayCambio=[];
+                cargarUsuario();
+                $( this ).dialog( "close");
+              },
+              "Cancelar": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+          });
+    }
+    else{
+        var jsonUsuario=JSON.stringify(oUsuarioActivo);
+        var sHtml="<form method='post' action='./perfil.php' id='formulario'><input type='hidden' id='usuario' name='usuario' value='"+jsonUsuario+"'/></form>";
+        $('body').append(sHtml);
+        $('#formulario').submit();
+    } 
+    
+
+}
+

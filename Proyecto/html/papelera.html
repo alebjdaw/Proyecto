@@ -40,8 +40,8 @@
               <li class="nav-item">
                 <a class="nav-link" onclick="salir()">Salir</a>
               </li>
+              
             </ul>
-            
           </div>
         </div>
       </nav>
@@ -50,17 +50,18 @@
       
         <div class="container text-center shadow-lg  rounded border border h-100 mt-5 mb-5" id="contenido">
           
-            <div class="row mt-3 ml-3">
-              <h2>Crea una lista:</h2>
-              <button class="ml-3" type="button" id="botonModalLista">+</button>
-            </div>
-            <hr>
-               
-            <div class="row container" id="contenedorListas">
+          <div class="row mt-3 ml-3">
+            <h2>Papelera:</h2>
+            <button class="ml-3 h-100 btn btn-danger" type="button" onclick="vaciarPapelera()"><i class="fas fa-trash-alt"></i></button>
+          </div>
+          <hr>
              
+          <div class="row container" id="contenedorListas">
+           
 
-              
-            </div>              
+            
+          </div>                 
+                          
             
         </div>  
         
@@ -72,55 +73,20 @@
 			<div class="container">
 				<div class="row">
                     <div class="col-md-12 text-center mt-2">
-                          <p>
-                            <span>Teléfono: &nbsp</span>999 999 999
-                            <span>Correo: &nbsp</span> correoFalso@invento.es
-                            <span>Dirección: &nbsp</span> C/ Falsa Nº 14
-                          </p>
+                        <div class="copyright">
+                            <p><span>Teléfono: &nbsp</span>999 999 999 &nbsp<span>Correo: &nbsp</span> correoFalso@invento.es &nbsp<span>Dirección: &nbsp</span> C/ Falsa Nº 14</p>
+                        </div>
                         
                     </div>
 					<div class="col-md-12 text-center">
-						
+						<div class="copyright">
 							<p>© <span>2018</span> <a href="#" class="transition">Remember Me</a> All rights reserved.</p>
-						
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
       </section>
-
-      <div id="modalAñadirLista" title="Crea una nueva lista">
-          <p class="validateTips">Solo el nombre es requerido.</p>
-         
-          <form id="formModalAñadirLista">
-            <fieldset>
-              <table id="añadirTarea">
-                <tr>
-                <td>
-                    <label for="nombreLista">Nombre:</label>
-                </td>
-                <td>
-                    <input type="text" name="nombreLista" class="text ui-widget-content ui-corner-all">
-                </td>
-                <tr>
-                  <td>
-                      <label for="nombreTarea">Tarea:</label>
-                  </td>
-                  <td>
-                      <input type="text" name="nombreTarea"  class="text ui-widget-content ui-corner-all">
-                      
-                  </td>
-                  <td>
-                    <button type="button" class="btn btn-danger ml-3" onclick="eliminarTarea($(this).parent().parent())">x</button>
-                  </td>
-                </tr>
-              </table>
-            </fieldset>
-          </form>
-        </div>
-
-
-      
       
       
   

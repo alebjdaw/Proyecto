@@ -34,6 +34,7 @@ var dialog = $("#modalAñadirLista").dialog({
             datos.dniUsuario=oUsuarioActivo.sDni;
             var sParametros="datos="+JSON.stringify(datos); 
             $.post("./php/insert/altaLista.php", sParametros, procesoAltaLista, 'json');
+            dialog.dialog( "close" );
           }
 
       },
@@ -195,7 +196,133 @@ function eliminarItem($this){
 }
 
 function detallesItem($this){
-    var itemId=($this.attr("id").replace("detalles_item_",""));
+    itemId=($this.attr("id").replace("detalles_item_",""));
+    $.ajax({
+        method: "POST",
+        url: "./html/modalDetallesItem.html",
+        success: function(html){
+            $("#contenido").append(html);
+            $("#cambiarFotoItem_idItem").attr("id","cambiarFotoItem_"+itemId);
+            $.ajax({
+                method: "POST",
+                url: "./php/select/getDetallesItem.php",
+                data: { "iId" : itemId},
+                success: function(data){
+                    oItem= new Item();
+                    oItem.iId=data.id;
+                    oItem.sNombre=data.nombre;
+                    oItem.sDescripcion=data.descripcion;
+                    
+                    oItem.dFechaAlta=new Date(data.fechaAlta);
+                    if(data.fechaBaja!=null){
+                        oItem.dFechaBaja=new Date(data.fechaBaja);
+                        
+                    }
+                    
+                    if(data.fechaAviso!=null){
+                        oItem.dFechaAviso=new Date(data.fechaAviso);
+                        $("#avisoItem").val(oItem.dFechaAviso.toISOString().slice(0,10));
+                    }
+                    
+                    
+                    oItem.sFicheroImagen=data.imagen;
+                    oItem.iLista=data.lista;
+                    oItem.iOrden=data.orden
+                    $("#descripcionItem").val(oItem.sDescripcion);
+                    
+                    
+                    
+                    $("#nombreItem").val(oItem.sNombre);
+                    if(oItem.sFicheroImagen!=""){
+                        $("#cambiarFoto").css("background-image","url(./imagenes/item/"+oItem.sFicheroImagen+")");
+                    }
+                    $("#modalDetallesItem").attr("title",oItem.sNombre);
+                    
+                },
+                async: false,
+                dataType: 'json'
+            });
+        },
+        async: false,
+        dataType: 'html'
+    });
+    $( "#modalDetallesItem" ).dialog({
+        resizable: false,
+        width: 400,
+        height:500,
+        modal: true,
+        buttons: {
+          "Modificar": function(event){
+              if( event.target.firstChild.nodeValue==="Guardar cambios"){
+                    event.target.firstChild.nodeValue="Modificar";
+                    $("#descripcionItem")[0].disabled=true;
+                    $("#avisoItem")[0].disabled=true;
+                    $("#nombreItem")[0].disabled=true;
+                    $("#cambiarFotoItem_"+itemId).hide();
+                    oItem.sNombre=$("#nombreItem").val();
+                    oItem.dFechaAviso=$("#avisoItem").val();
+                    oItem.sDescripcion=$("#descripcionItem").val();
+                    var datosJSON=JSON.stringify(oItem);
+                    var sParametros="datos="+datosJSON;
+                    $.post("./php/update/updateItem.php", sParametros, function(){
+                        $("#nombre_item_"+oItem.iId).text(oItem.sNombre);
+                        
+                        alert("Datos actualizados");
+                });
+              }
+              else{
+                  console.log(event);
+                    event.target.firstChild.nodeValue="Guardar cambios";
+                    $("#descripcionItem")[0].disabled=false;
+                    $("#avisoItem")[0].disabled=false;
+                    $("#nombreItem")[0].disabled=false;
+                    $("#cambiarFotoItem_"+itemId).show();
+                }
+                
+            }
+            },
+            close: function(){
+                $( "#modalDetallesItem" ).remove();
+            }
+        });
+
+}
+
+function cambiarImagen(){
+    $("#cambiarFoto").css("background-image","url(./imagenes/7.png)");
+}
+function completeUpload(data) {
+    var success=data.resultado;
+    var fileName=data.nombre;
+    
+    if(success == 1){
+        $("#cambiarFoto").css("background-image","");
+        $("#cambiarFoto").css("background-image","url(./imagenes/item/"+fileName+")");
+        $('#fileInput').attr("value", fileName);
+    }else{
+    
+        alert('Ha habido un error al subir la imagen');
+    }
+    return true;
+}
+function cambiarFoto(event,$this){
+    event.preventDefault();
+    idItem=$this.attr("id").replace("cambiarFotoItem_","");
+    $('#idItemInputOculto').val(idItem);
+    $("#fileInput:hidden").trigger('click');
+
+    $("#fileInput").on('change', function(){
+        var image = $('#fileInput').val();
+        var img_ex = /(.jpg|.jpeg|.png|.gif)$/i;
+            
+        if(!img_ex.exec(image)){
+            alert('Por favor suba solo archivos con extensión: .jpg/.jpeg/.png/.gif ');
+            $('#fileInput').val('');
+            return false;
+        }else{
+            $( "#picUploadForm" ).trigger('submit');
+        }
+    });
 }
 
 function añadirItem($this){
@@ -367,7 +494,8 @@ function compartirLista($this){
                     url: "./php/insert/insertListaCompartida.php",
                     data:{"sDni":oUsuarioActivo.sDni, "iId":listaId,"usuariosCompartidos":JSON.stringify(usuariosCompartidos)},
                     success: function(data){
-                        console.log("lo he hecho porque soy la polla");    
+                        alert("Se ha realizado con éxito.");
+                        $("#modalSeleccionarUsuario").remove(); 
                     },
                     async: false
                 });

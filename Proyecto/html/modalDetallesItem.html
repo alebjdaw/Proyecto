@@ -1,0 +1,49 @@
+<div id="modalDetallesItem" title="cambiar título">
+   
+    <form id="formModalDetallesItem">
+      <fieldset>
+        <table id="detallesItem">
+          <tr>
+          <td>
+              <label for="nombreItem">Nombre:</label>
+          </td>
+          <td>
+              <input type="text" name="nombreItem" id="nombreItem" class="text ui-widget-content ui-corner-all" disabled>
+          </td>
+          <tr>
+            <td>
+                <label for="descripcionItem">Descripción:</label>
+            </td>
+            <td>
+                <input type="text" name="descripcionItem" id="descripcionItem" class="text ui-widget-content ui-corner-all" disabled>
+                
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <label for="avisoItem">Aviso:</label>
+            </td>
+            <td>
+                <input type="date" name="avisoItem" id="avisoItem"  class="text ui-widget-content ui-corner-all" disabled>
+                
+            </td>
+          </tr>
+          <br>
+          <tr>
+            <td colspan="2">
+                <div id="cambiarFoto" class="mt-3 ml-5" style="background-image: url(./imagenes/7.png);background-size: contain; background-repeat: no-repeat; height: 200px; width: 200px;">
+                  
+                  
+                    <a href="#" id="cambiarFotoItem_idItem" style="position: relative; top:5%; left:110%; display: none;" onclick="cambiarFoto(event,$(this))"><i class="fas fa-edit"></i></a>
+                </div>
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+    </form>
+    <form method="post" action="./php/upload.php" enctype="multipart/form-data" id="picUploadForm" target="uploadTarget">
+      <input type="file" name="fichero_usuario" id="fileInput"  style="display:none"/>
+      <input type="text" name="iId" id="idItemInputOculto"  style="display:none"/>
+    </form>
+    <iframe id="uploadTarget" name="uploadTarget" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
+  </div>
